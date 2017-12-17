@@ -98,11 +98,11 @@
 
     ; 1 = LoadSegment; 2 = FATSegment
     %macro ReadFile 2
-        mov ax,[%1]
+        mov ax,[%1] ; 1000h
         mov es,ax
 
         ; Set memmory offset for loading to 0
-        xor bx,bx
+        xor bx,bx ; so buffer address is 1000:0
 
         ; Set memory segment for FAT
         mov cx,[FileStart]
