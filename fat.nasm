@@ -5,7 +5,7 @@
     ;push ax
     ; The root directory will be loaded in a higher segment.
     ; Set ES to this segment.
-    mov ax,[%2] ; load segment in ax
+    mov ax,%2 ; load segment in ax
     mov es,ax
   
     ; the number of sectors that the root directory occupies
@@ -73,7 +73,7 @@
     %macro ReadFAT 1
         ; The FAT will be loaded in a special segment
         ; set ES to this segment
-        mov ax,[%1]
+        mov ax,%1
         mov es,ax
 
         ; calculate offset of FAT
@@ -98,7 +98,7 @@
 
     ; 1 = LoadSegment; 2 = FATSegment
     %macro ReadFile 2
-        mov ax,[%1] ; 1000h
+        mov ax,%1 ; 1000h
         mov es,ax
 
         ; Set memmory offset for loading to 0
@@ -122,7 +122,7 @@
 
             ; get next sector from FAT
             push ds ; make DS:SI point to fat table in memory
-            mov dx,[%2]
+            mov dx,%2
             mov ds,dx
 
             mov si,cx ; make SI point to the current FAT entry

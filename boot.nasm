@@ -1,13 +1,12 @@
 [ORG 0x7c00]
 
-[SECTION .bss]
-	BootDrive resb 0
-
 [SECTION .text]
 	global main
 
 %include "fat.nasm"
-LOAD_SEGMENT: dw 01000h
+LOAD_SEGMENT equ 01000h
+FAT_SEGMENT equ 0ee0h
+BootDrive db 0h
 
 main:
 	jmp short start
@@ -32,25 +31,18 @@ start:
 	
 	;  reset disk system
 	; jump to BootFailure on error
- 	mov dl,[BootDrive] ; drive to reset
+    mov dl,[BootDrive] ; drive to reset
 	xor ax,ax ; subfunction 0
 	int 13h ; call interrupt 13h
 	jc BootFailure ; display error if carry set (error)
-	
 	FindFile twostagefile,LOAD_SEGMENT
     ReadFAT FAT_SEGMENT
     ReadFile LOAD_SEGMENT,FAT_SEGMENT
 	
-    ; I'm not sure this is necessary
-    mov ax,0h ; load offset in ds
-    mov ds,ax
-    mov ax,[LOAD_SEGMENT] ; load 1000h in es (segment)
+    mov ax,word LOAD_SEGMENT
     mov es,ax
-    
-    ; Jump to second stage start of code:    
-    push word [LOAD_SEGMENT]
-    push word 0h
-    retf
+    mov ds,ax
+    jmp LOAD_SEGMENT:0
 
 	; end of loader for now, reboot
 	call Reboot
@@ -131,8 +123,6 @@ loadmsg: db "Loading OS...",13,10,0
 diskerror: db "Disk error. ",0
 rebootmsg: db "Press any key to reboot.",13,10,0
 twostagefile: db "2NDSTAGEBIN",0
-
-FAT_SEGMENT: dw 0ee0h
 
 times 510-($-$$) db 1
 BootMagic: dw 0AA55h
