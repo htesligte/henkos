@@ -12,7 +12,7 @@
 
     kernelfile: db "KERNEL  BIN"
     rebootmsg: db "Press any key to reboot",13,10,0
-    diskerror: db "Disk Error",13,10,0
+    diskerror: db "Disk Arror",13,10,0
     a20error: db "Please buy a pc that isn't older than 25 years",13,10,0
     a20loaded: db "A20 is enabled",13,10,0
     idt:

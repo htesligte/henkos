@@ -1,22 +1,24 @@
 [ORG 0x7c00]
 
-[SECTION .text]
-	global main
-
-%include "fat.nasm"
 LOAD_SEGMENT equ 01000h
 FAT_SEGMENT equ 0ee0h
-BootDrive db 0h
+
+[SECTION .text]
+    global main
 
 main:
 	jmp short start
 	nop
+
+%include "bootsector.nasm"
+%include "fat.nasm"
 
 hang:
 	jmp hang
 
 start:
 	cli
+    xchg bx,bx
 	mov [BootDrive],dl ; save what drive we booted from (should be 0x0)
 	mov ax,cs ; cs = 0x0, that's where the boot sector is (0x07c00)
 	mov ds,ax ; ds = cs = 0x0

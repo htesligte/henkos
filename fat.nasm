@@ -145,15 +145,3 @@
             cmp cx,0ff8h ; if the next FAT entry is greater or equal
             jl %%read_file_next_sector ; to 0xff8, then we have reached end-of-file
     %endmacro
-
-SectorsPerTrack dw 9
-NumHeads dw 2
-SectSize dw 0200h
-RootSize dw 224
-RootSectors dw 0
-RootStart dw 0
-FileStart dw 0
-FATCount db 2
-FATSize dw 9
-HiddenSect dd 0
-ReservedSectors dw 1
