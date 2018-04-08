@@ -7,14 +7,14 @@
     global main
 
     main:
-        jmp short start
+        jmp start
         nop
 
     kernelfile: db "KERNEL  BIN"
     rebootmsg: db "Press any key to reboot",13,10,0
     diskerror: db "Disk Error",13,10,0
     a20error: db "Please buy a pc that isn't older than 25 years",13,10,0
-    a20loaded: db "A20 is enabled"
+    a20loaded: db "A20 is enabled",13,10,0
     idt:
         dw 2048 ; size of idt (256 entries of 8 bytes)
         dd 0h ; linear address of idt
