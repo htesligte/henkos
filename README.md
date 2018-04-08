@@ -15,5 +15,5 @@ wine imagefs.exe a test.img 2ndstage.bin
 ````
 
 # Notes
-* The image has an invalid fat12 bootsector at the moment because I didn't really understand how some data was loaded. I will fix this once I get to it.
+* ~~The image has an invalid fat12 bootsector at the moment because I didn't really understand how some data was loaded. I will fix this once I get to it.~~ Fixed now, still don't understand how to use linux tools to create a floppy image. `dd` and `mkdosfs` don't seem to help here.
 * Currently I use imagefs.exe from that tutorial to build a floppy image, but I'm sure there are plenty enough linux tools that can do the same job.
